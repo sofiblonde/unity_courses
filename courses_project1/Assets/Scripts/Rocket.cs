@@ -5,6 +5,8 @@ using UnityEngine.WSA;
 
 public class Rocket : MonoBehaviour
 {
+    [SerializeField] float rotSpeed = 100f;
+    [SerializeField] float flySpeed = 100f;
 
     Rigidbody rigidBody;
     AudioSource audioSource;
@@ -31,7 +33,7 @@ public class Rocket : MonoBehaviour
         {
             //print("зажали пробел");
 
-            rigidBody.AddRelativeForce(Vector3.up);
+            rigidBody.AddRelativeForce(Vector3.up * flySpeed);
 
             if(!audioSource.isPlaying) 
                 audioSource.Play();
@@ -44,18 +46,22 @@ public class Rocket : MonoBehaviour
 
     void Rotation() 
     {
+        float rotationSpeed = rotSpeed * Time.deltaTime;
 
+
+        rigidBody.freezeRotation = true;
 
         if(Input.GetKey(KeyCode.A)) 
         {
             //print("поворот влево");
-            transform.Rotate(Vector3.forward);
+            transform.Rotate(Vector3.forward * rotationSpeed);
         }
 
         else if(Input.GetKey(KeyCode.D)) 
         {
             //print("поворот влево");
-            transform.Rotate(-Vector3.forward);
+            transform.Rotate(-Vector3.forward * rotationSpeed);
         }
+        rigidBody.freezeRotation = false;
     }
 }
