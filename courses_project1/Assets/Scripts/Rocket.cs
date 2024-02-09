@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.WSA;
 
 public class Rocket : MonoBehaviour
@@ -10,6 +11,9 @@ public class Rocket : MonoBehaviour
 
     Rigidbody rigidBody;
     AudioSource audioSource;
+
+    enum State {Playing, Dead, NextLVL};
+    State state = State.Playing;
 
     // Start is called before the first frame update
     // выполняется при старте
@@ -23,24 +27,49 @@ public class Rocket : MonoBehaviour
     //выполняется покадрово
     void Update()
     {
+        if (state == State.Playing) { 
         Launch();
         Rotation();
+        }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        switch(collision.gameObject.tag)
+
+        if (state != State.Playing)
+        {
+            return;
+        }
+
+
+        switch (collision.gameObject.tag)
         {
             case "Friendly":
                 print("OK");
+                break;
+            case "Finish":
+                state = State.NextLVL;
+                Invoke("LoadNextLevel", 2f);
                 break;
             case "Battery":
                 print("Energy");
                 break;
             default:
-                print("BOOOOOOOOOOM");
+                state = State.Dead;
+                Invoke("LoadFirstLVL", 2f);
                 break;
         } 
+    }
+
+
+    void LoadNextLVL () //finish
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    void LoadFirstLVL ()  //lose
+    {
+        SceneManager.LoadScene(0);
     }
 
 
