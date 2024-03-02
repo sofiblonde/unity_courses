@@ -911,6 +911,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 02afe6759977f6846a265706affb8f70, type: 2}
+    - target: {fileID: 5573178033649339805, guid: 44dd1c35abd2c9a45ade5f0d9e0df806, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 189eed8967f07dc48a70d80b1d823b4a, type: 3}
+    - target: {fileID: 5573178033649339805, guid: 44dd1c35abd2c9a45ade5f0d9e0df806, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 189eed8967f07dc48a70d80b1d823b4a, type: 3}
     - target: {fileID: 7651428277295963670, guid: 44dd1c35abd2c9a45ade5f0d9e0df806, type: 3}
       propertyPath: m_Name
       value: Rocket

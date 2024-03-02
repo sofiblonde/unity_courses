@@ -8,6 +8,12 @@ public class Rocket : MonoBehaviour
 {
     [SerializeField] float rotSpeed = 100f;
     [SerializeField] float flySpeed = 100f;
+    [SerializeField] AudioClip flySound;
+    [SerializeField] AudioClip boomSound;
+    [SerializeField] AudioClip finishSound;
+    [SerializeField] ParticleSystem flyParticles;
+    [SerializeField] ParticleSystem boomParticles;
+    [SerializeField] ParticleSystem finishParticles;
 
     Rigidbody rigidBody;
     AudioSource audioSource;
@@ -46,21 +52,39 @@ public class Rocket : MonoBehaviour
         {
             case "Friendly":
                 print("OK");
+                //можно например сюда сделать эффект для приземления, и может быть несколько платформ, например, сохранения. 
                 break;
             case "Finish":
-                state = State.NextLVL;
-                Invoke("LoadNextLevel", 2f);
+                Finish();
                 break;
             case "Battery":
                 print("Energy");
                 break;
             default:
-                state = State.Dead;
-                Invoke("LoadFirstLVL", 2f);
+                Lose();
                 break;
         } 
     }
 
+
+     void Finish () 
+    {
+        state = State.NextLVL;
+        audioSource.Stop();
+        audioSource.PlayOneShot(finishSound);
+        finishParticles.Play();
+        Invoke("LoadNextLevel", 2f);
+    }
+
+
+    void Lose()
+    {
+        state = State.Dead;
+        audioSource.Stop();
+        audioSource.PlayOneShot(boomSound);
+        boomParticles.Play();
+        Invoke("LoadFirstLVL", 2f);
+    }
 
     void LoadNextLVL () //finish
     {
@@ -75,19 +99,19 @@ public class Rocket : MonoBehaviour
 
     void Launch()
     {
-               if(Input.GetKey(KeyCode.Space))
+        if(Input.GetKey(KeyCode.W))
         {
-            //print("зажали пробел");
+                rigidBody.AddRelativeForce(Vector3.up * flySpeed);
 
-            rigidBody.AddRelativeForce(Vector3.up * flySpeed);
-
-            if(!audioSource.isPlaying) 
-                audioSource.Play();
+                if(!audioSource.isPlaying) 
+                audioSource.PlayOneShot(flySound);
+                flyParticles.Play();
         }
         else 
         { 
+            flyParticles.Stop();
             audioSource.Pause();
-        }  
+        }
     }
 
     void Rotation() 
