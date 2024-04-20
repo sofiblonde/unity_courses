@@ -391,6 +391,7 @@
 -analyzer:"D:/unity/hub/editor/2023.2.3f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"D:/unity/hub/editor/2023.2.3f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 -analyzer:"D:/unity/hub/editor/2023.2.3f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
+"Assets/Scripts/MoveObject.cs"
 "Assets/Scripts/Rocket.cs"
 -langversion:9.0
 
