@@ -88,7 +88,15 @@ public class Rocket : MonoBehaviour
 
     void LoadNextLVL () //finish
     {
-        SceneManager.LoadScene(1);
+        int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextLevelIndex = currentLevelIndex + 1;
+        
+        if(nextLevelIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            nextLevelIndex = 0;
+        }
+
+        SceneManager.LoadScene(nextLevelIndex);
     }
 
     void LoadFirstLVL ()  //lose
@@ -101,7 +109,7 @@ public class Rocket : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.W))
         {
-                rigidBody.AddRelativeForce(Vector3.up * flySpeed);
+                rigidBody.AddRelativeForce(Vector3.up * flySpeed * Time.deltaTime);
 
                 if(!audioSource.isPlaying) 
                 audioSource.PlayOneShot(flySound);
